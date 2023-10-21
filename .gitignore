@@ -1,0 +1,7 @@
+venv/
+.pytest_cache
+**__pychache__/
+db.sqlite3
+.env
+.coverage
+.vscode
