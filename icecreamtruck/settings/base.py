@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # External packages
-    'rest_framework'
+    'rest_framework',
     # External apps
+    'icecreamtruck.icecreamapi',
 ]
 
 MIDDLEWARE = [
