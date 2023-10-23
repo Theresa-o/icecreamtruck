@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # External packages
+    'corsheaders',
     'rest_framework',
     'drf_spectacular',
     # External apps
@@ -52,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # cors
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'icecreamtruck.urls'
@@ -119,3 +122,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}
 
 SPECTACULAR_SETTINGS = {"TITLE": "Django DRF Ecommerce"}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+# Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+CORS_ALLOW_METHODS = 'GET, POST, PUT, DELETE, OPTIONS'
+
+# Allow credentials (cookies, HTTP authentication) to be sent with the request
+CORS_ALLOW_CREDENTIALS = True
