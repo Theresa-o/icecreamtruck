@@ -1,88 +1,87 @@
-from rest_framework import serializers
-from .models import FoodItem, FoodFlavor, Customer, Inventory, Transaction, Earnings
+# from rest_framework import serializers
+# from .models import FoodItem, FoodFlavor, Customer, Inventory, Transaction, Earnings
 
-class FoodFlavorSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the FoodFlavor model.
+# class FoodFlavorSerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the FoodFlavor model.
 
-    This serializer is used for serializing food item flavors.
+#     This serializer is used for serializing food item flavors.
 
-    Fields:
-        All fields from the FoodFlavor model.
-    """
+#     Fields:
+#         All fields from the FoodFlavor model.
+#     """
 
-    class Meta:
-        model = FoodFlavor
-        fields = "__all__"
+#     class Meta:
+#         model = FoodFlavor
+#         fields = "__all__"
 
-class FoodItemSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the FoodItem model.
+# class FoodItemSerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the FoodItem model.
 
-    This serializer is used for serializing food items and their associated flavors.
+#     This serializer is used for serializing food items and their associated flavors.
 
-    Fields:
-        All fields from the FoodItem model.
-    """
+#     Fields:
+#         All fields from the FoodItem model.
+#     """
+#     foodflavor_set = FoodFlavorSerializer(many=True, read_only=True)
+    
+#     class Meta:
+#         model = FoodItem
+#         fields = "__all__"
 
-    foodflavor = FoodFlavorSerializer(many=True, read_only=True)
+# class CustomerSerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the Customer model.
 
-    class Meta:
-        model = FoodItem
-        fields = "__all__"
+#     This serializer is used for serializing customer data.
 
-class CustomerSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Customer model.
+#     Fields:
+#         All fields from the Customer model.
+#     """
 
-    This serializer is used for serializing customer data.
+#     class Meta:
+#         model = Customer
+#         fields = "__all__"
 
-    Fields:
-        All fields from the Customer model.
-    """
+# class InventorySerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the Inventory model.
 
-    class Meta:
-        model = Customer
-        fields = "__all__"
+#     This serializer is used for serializing inventory data.
 
-class InventorySerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Inventory model.
+#     Fields:
+#         All fields from the Inventory model.
+#     """
 
-    This serializer is used for serializing inventory data.
+#     class Meta:
+#         model = Inventory
+#         fields = "__all__"
 
-    Fields:
-        All fields from the Inventory model.
-    """
+# class TransactionSerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the Transaction model.
 
-    class Meta:
-        model = Inventory
-        fields = "__all__"
+#     This serializer is used for serializing purchase transactions made by customers.
 
-class TransactionSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Transaction model.
+#     Fields:
+#         All fields from the Transaction model.
+#     """
 
-    This serializer is used for serializing purchase transactions made by customers.
+#     class Meta:
+#         model = Transaction
+#         fields = "__all__"
 
-    Fields:
-        All fields from the Transaction model.
-    """
+# class EarningsSerializer(serializers.ModelSerializer):
+#     """
+#     Serializer for the Earnings model.
 
-    class Meta:
-        model = Transaction
-        fields = "__all__"
+#     This serializer is used for serializing earnings data.
 
-class EarningsSerializer(serializers.ModelSerializer):
-    """
-    Serializer for the Earnings model.
+#     Fields:
+#         All fields from the Earnings model.
+#     """
 
-    This serializer is used for serializing earnings data.
-
-    Fields:
-        All fields from the Earnings model.
-    """
-
-    class Meta:
-        model = Earnings
-        fields = "__all__"
+#     class Meta:
+#         model = Earnings
+#         fields = "__all__"
