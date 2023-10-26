@@ -6,15 +6,16 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.conf import settings
 from django.conf.urls.static import static
 
-router = DefaultRouter()
-# router.register(r"FoodItem", views.FoodItemViewSet)
+# router = DefaultRouter()
+# router.register(r"CreateTruck", views.CreateTruckViewSet)
 # router.register(r"Inventory", views.InventoryViewSet)
-# router.register(r"Earnings", views.EarningsViewSet)
-# router.register(r"Transaction", views.TransactionViewSet)
+# router.register(r"Purchase", views.PurchaseViewSet)
+# router.register(r"Truck", views.TruckViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("api/", include(router.urls)),
+    path('', include('icecreamtruck.icecreamapi.urls')),
+    # path("api/", include(router.urls)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/docs", SpectacularSwaggerView.as_view(url_name="schema"))
 ]

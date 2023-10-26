@@ -8,6 +8,9 @@ class Truck(models.Model):
     Ice Cream Truck model representing an ice cream truck.
     """
 
+    # Add a reverse relationship to Sale
+    sales = models.ManyToManyField('Sale', related_name='trucks', blank=True)
+
     name = models.CharField(max_length=100)
 
     def total_sales(self):
@@ -15,7 +18,9 @@ class Truck(models.Model):
         total = sales.aggregate(total_sales=Sum('total'))['total_sales']
         return total if total else 0
 
-
+    def __str__(self):
+        return self.name
+    
 class FoodItem(models.Model):
     """
 
@@ -39,7 +44,7 @@ class FoodItem(models.Model):
     truck = models.ForeignKey(Truck, related_name="food_items", on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.get_item_type_display()
+        return f"{self.name} ({self.get_item_type_display()}) - ${self.price}"
     
 class FoodFlavor(models.Model):
     """
@@ -86,3 +91,6 @@ class Sale(models.Model):
     quantity = models.PositiveIntegerField()
     purchase_time = models.DateTimeField(auto_now_add=True)
     # earnings = models.ForeignKey(Earnings, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Sale of {self.quantity} x {self.food_item}"

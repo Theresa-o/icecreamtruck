@@ -82,6 +82,15 @@ class CreateFoodItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(f"'food_flavor' must be one of {valid_choices}")
         return value
     
+class SaleSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Sale model.
+
+    """
+
+    class Meta:
+        model = Sale
+        fields = ["truck", "food_item", "user", "quantity", "purchase_time"]
 
 
 # class InventorySerializer(serializers.ModelSerializer):
