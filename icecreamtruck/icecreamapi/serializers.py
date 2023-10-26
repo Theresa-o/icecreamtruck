@@ -9,7 +9,8 @@ class FoodFlavorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FoodFlavor
-        fields = "__all__"
+        fields = ["name", "food_item"]     
+
 
 class FoodItemSerializer(serializers.ModelSerializer):
     """
@@ -61,11 +62,11 @@ class CreateTruckSerializer(serializers.Serializer):
 class CreateFoodItemSerializer(serializers.ModelSerializer):
     # add a field for flavour
     # flavor = serializers.CharField(max_length=2, required=True)
-    food_flavor = serializers.CharField(max_length=2)
+    food_flavor = serializers.CharField(max_length=20)
 
     class Meta:
         model = FoodItem
-        fields = ["name", "price", "quantity", "item_type", "flavor"]
+        fields = ["name", "price", "quantity", "item_type", "food_flavor", "image", "truck"]
 
     def validate_item_type(self, value):
         # validate the food item type field to ensure that it matches with the choices in the model

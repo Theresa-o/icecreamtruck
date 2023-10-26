@@ -109,7 +109,7 @@ class CreateTruckViewSet(viewsets.ViewSet):
         serializer.is_valid(raise_exception=True)
         truck_name = serializer.validated_data['name']
         Truck.objects.create(name=truck_name)
-        return Response({'message': 'Ice cream truck created successfully'})
+        return Response({'message': 'Ice cream truck created successfully.'}, status=status.HTTP_201_CREATED)
     
 class CreateFoodItemViewset(viewsets.ViewSet):
     """

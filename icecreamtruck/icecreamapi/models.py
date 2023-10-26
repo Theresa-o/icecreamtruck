@@ -14,9 +14,18 @@ class Truck(models.Model):
     name = models.CharField(max_length=100)
 
     def total_sales(self):
-        sales = self.sales.annotate(total=F('food_item__price') * F('quantity'))
-        total = sales.aggregate(total_sales=Sum('total'))['total_sales']
-        return total if total else 0
+
+        total = self.sales.annotate(total_sale=F('food_item__price') * F('quantity')).aggregate(total_sales=Sum('total_sale'))['total_sales']
+        return total if total is not None else 0
+
+        # second attempt
+        # total = self.sales.aggregate(total_sales=Sum(F('food_item__price') * F('quantity')))['total_sales']
+        # return total if total is not None else 0
+    
+        # first attempt
+        # sales = self.sales.annotate(total=F('food_item__price') * F('quantity'))
+        # total = sales.aggregate(total_sales=Sum('total'))['total_sales']
+        # return total if total else 0
 
     def __str__(self):
         return self.name
@@ -87,7 +96,7 @@ class Sale(models.Model):
     """
     truck = models.ForeignKey(Truck, on_delete=models.CASCADE)
     food_item = models.ForeignKey(FoodItem, related_name="sales", on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField()
     purchase_time = models.DateTimeField(auto_now_add=True)
     # earnings = models.ForeignKey(Earnings, on_delete=models.CASCADE)
