@@ -94,25 +94,25 @@ The system uses serializers to convert model data into JSON format for API endpo
 The system provides the following API endpoints:
 -
 ### Purchase
-- URL: /api/purchase/
+- URL: /purchase/
 - Method: POST
 - Description: Allows customers to make a purchase from the ice cream truck by specifying the food item ID and the quantity they want to purchase. If the food item is found and the quantity is available, the purchase is successful, and the response message is 'ENJOY!'. If the food item is not found, a 404 Not Found response is returned. If the quantity is not available, a 400 Bad Request response is returned with the message 'SORRY!'.
 
 ### Inventory
-- URL: /api/inventory/
+- URL: /inventory/
 - Method: GET
 - Description: Returns a list of all ice cream trucks along with their inventory of food items and total sales.
 
 ### Trucks
-- URL: /api/trucks/
+- URL: /trucks/
 - Method: GET
 - Description: Allows users to view a list of all ice cream trucks.
 ### Create Truck
-- URL: /api/create-truck/
+- URL: /create-truck/
 - Method: POST
 - Description: Allows users to create a new ice cream truck by providing a name for the truck. If the name is provided, a new ice cream truck is created, and the response message is 'Ice cream truck created successfully'. If the name is missing, a 400 Bad Request response is returned with the message 'Truck name is required.'
 ### Create Food Item
-- URL: /api/create-food-item/<truck_id>/
+- URL: /create-food-item/<truck_id>/
 - Method: POST
 - Description: Allows users to add new food items to a specific ice cream truck. The endpoint expects a JSON body containing the data for the new food items.
 ## Running Tests
