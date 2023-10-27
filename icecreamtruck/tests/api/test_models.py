@@ -1,6 +1,8 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
+from django.test import TestCase
+
 from icecreamtruck.icecreamapi.models import FoodFlavor, FoodItem, Sale, Truck
+
 
 class TruckModelTest(TestCase):
     def setUp(self):
@@ -11,7 +13,7 @@ class TruckModelTest(TestCase):
 
     def test_total_sales_method(self):
         # Create a test user
-        user = User.objects.create_user(username='testuser', password='testpassword')  
+        user = User.objects.create_user(username='testuser', password='testpassword')
 
         food_item = FoodItem.objects.create(
             name='Ice Cream',
@@ -21,10 +23,6 @@ class TruckModelTest(TestCase):
             truck=self.truck,
         )
         Sale.objects.create(food_item=food_item, truck=self.truck, user=user, quantity=2)
-
-        print(f"Debug: truck.sales.all() returns {self.truck.sales.all()}")
-        print(f"Debug: total_sales() returned {self.truck.total_sales()}")
-        print(f"Debug: Current truck name: {self.truck.name}")
 
         self.assertEqual(self.truck.total_sales(), 10.00)
 
@@ -55,6 +53,7 @@ class FoodItemModelTest(TestCase):
         self.assertEqual(self.food_item.item_type, 'ice_cream')
         self.assertEqual(self.food_item.truck, self.truck)
 
+
 class FlavorModelTest(TestCase):
     def setUp(self):
         self.truck = Truck.objects.create(name='Test Truck')
@@ -66,6 +65,7 @@ class FlavorModelTest(TestCase):
     def test_flavor_creation(self):
         self.assertEqual(self.flavor.name, 'chocolate')
         self.assertEqual(self.flavor.food_item, self.food_item)
+
 
 class SaleModelTest(TestCase):
     def setUp(self):

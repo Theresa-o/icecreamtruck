@@ -1,6 +1,13 @@
 from django.urls import include, path
 
-from .views import CreateFoodItemViewset, CreateTruckViewSet, InventoryViewSet, PurchaseViewSet, TruckViewSet, FoodItemViewSet
+from .views import (
+    CreateFoodItemViewset,
+    CreateTruckViewSet,
+    FoodItemViewSet,
+    InventoryViewSet,
+    PurchaseViewSet,
+    TruckViewSet,
+)
 
 urlpatterns = [
     path('purchase/', PurchaseViewSet.as_view({'post': 'create'}), name='purchase-list'),
@@ -11,9 +18,8 @@ urlpatterns = [
     path('trucks/<int:pk>/', TruckViewSet.as_view({'get': 'retrieve'}), name='truck-detail'),
     path('trucks/create/', CreateTruckViewSet.as_view({'post': 'create'}), name='create-truck'),
     path(
-        'trucks/<int:truck_id>/create-food-item/',
-        CreateFoodItemViewset.as_view({'post': 'create_food_item'}),
+        'trucks/<int:truck_id>/create-food-item/<str:flavour>/',
+        CreateFoodItemViewset.as_view({'post': 'create'}),
         name='create-food-item',
-        ),
-
+    ),
 ]

@@ -1,5 +1,6 @@
 from pytest_factoryboy import register
-from .factories import FoodItemFactory, FoodFlavorFactory, CustomerFactory
+
+from .factories import CustomerFactory, FoodFlavorFactory, FoodItemFactory
 
 register(FoodItemFactory)
 register(FoodFlavorFactory)

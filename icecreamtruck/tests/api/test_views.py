@@ -1,11 +1,16 @@
+import os
+from shutil import rmtree
+from tempfile import NamedTemporaryFile, mkdtemp
+
+from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 from rest_framework.views import status
-from django.contrib.auth.models import User
+
 from icecreamtruck.icecreamapi.models import FoodFlavor, FoodItem, Sale, Truck
 from icecreamtruck.test_settings import common_settings
-from django.core.files.uploadedfile import SimpleUploadedFile
-import os
+from icecreamtruck.tests.api.utils import generate_photo_file
 
 
 @common_settings
@@ -82,6 +87,7 @@ class TruckViewSetTest(APITestCase):
             self.assertIn('id', truck_data)
             self.assertIn('name', truck_data)
 
+
 @common_settings
 class FoodItemViewSetTest(APITestCase):
     def setUp(self):
@@ -94,13 +100,9 @@ class FoodItemViewSetTest(APITestCase):
 
         self.truck = Truck.objects.create(name='Test Truck')
         self.food_item = FoodItem.objects.create(
-            item_type='ice_cream',
-            price=5.0,
-            image=image_data,
-            name='Ice Cream Cone',
-            quantity=10,
-            truck=self.truck
+            item_type='ice_cream', price=5.0, image=image_data, name='Ice Cream Cone', quantity=10, truck=self.truck
         )
+
     def test_list_food_items(self):
         response = self.client.get(reverse('fooditem-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -126,12 +128,13 @@ class FoodItemViewSetTest(APITestCase):
 
         # confirm response data
         food_item_data = response.data
-        self.assertIsInstance(food_item_data, dict)  
+        self.assertIsInstance(food_item_data, dict)
         self.assertIn('item_type', food_item_data)
         self.assertIn('image', food_item_data)
         self.assertIn('name', food_item_data)
         self.assertIn('quantity', food_item_data)
         self.assertIn('truck', food_item_data)
+
 
 @common_settings
 class CreateTruckViewSetTest(APITestCase):
@@ -147,77 +150,40 @@ class CreateTruckViewSetTest(APITestCase):
         response = self.client.post(reverse('create-truck'))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+
 @common_settings
 class CreateFoodItemViewSetTest(APITestCase):
     def setUp(self):
         self.truck = Truck.objects.create(name='Test Truck')
-        self.url = reverse('create-food-item', args=[self.truck.id])
+        self.url = reverse('create-food-item', args=[self.truck.id, 'pistachio'])
+        self.photo_file = generate_photo_file()
 
     def test_create_food_item_valid_data(self):
-        # Create an image path to populate test
-        image_path = 'images/pistachio/pistachioicecream.jpg'
+        valid_data = {
+            'name': 'Ice Cream',
+            'price': '5.00',
+            'quantity': 10,
+            'item_type': 'ice_cream',
+            'image': self.photo_file,
+        }
 
-        # Open the image file and read its binary content
-        with open(image_path, 'rb') as image_file:
-            image_data = SimpleUploadedFile(os.path.basename(image_path), image_file.read(), content_type="image/jpeg")
-
-        valid_data = [
-            {
-                'name': 'Ice Cream',
-                'price': '5.00',
-                'quantity': 10,
-                'item_type': 'ice_cream',
-                'food_flavor': 'chocolate',
-                'image': image_data,
-            },
-            {
-                'name': 'Shaved Ice',
-                'price': '4.50',
-                'quantity': 15,
-                'item_type': 'shaved_ice',
-                'food_flavor': 'pistachio',
-                'image': image_data,
-            },
-        ]
-        response = self.client.post(self.url, valid_data, format='json')
-        print(response.content)
+        response = self.client.post(self.url, valid_data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Ensure food items and flavors were created
-        self.assertEqual(FoodItem.objects.count(), len(valid_data))
-        self.assertEqual(response.data['message'], 'Food items added successfully.')
-
+        self.assertEqual(FoodItem.objects.count(), 1)
 
     def test_create_food_item_invalid_data(self):
-        # Create an image path to populate test
-        image_path = 'images/minticecream/minticecream.jpg'
+        invalid_data = {
+            'name': 'Invalid Food',
+            'price': 3.00,
+            'quantity': 0,  # Invalid quantity
+            'item_type': 'snack_bar',
+            'image': self.photo_file,
+        }
 
-        # Open the image file and read its binary content
-        with open(image_path, 'rb') as image_file:
-            image_data = SimpleUploadedFile(os.path.basename(image_path), image_file.read(), content_type="image/jpeg")
-
-        invalid_data = [
-            {
-                'name': 'Snack',
-                'price': '2.50',
-                'quantity': 5,
-                'item_type': 'InvalidType',
-                'food_flavor': 'InvalidFlavor',
-                'image': image_data,
-            },
-            {
-                'name': 'Invalid Food',
-                'price': '3.00',
-                'quantity': 0,  # Invalid quantity
-                'item_type': 'snack_bar',
-                'food_flavor': 'chocolate',
-                'image': image_data,
-            },
-        ]
-        response = self.client.post(self.url, invalid_data, format='json')
-        print(response.content)
+        response = self.client.post(self.url, invalid_data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         # Ensure no food items and flavors were created due to validation errors
         self.assertEqual(FoodItem.objects.count(), 0)
-

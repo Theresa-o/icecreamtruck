@@ -1,8 +1,11 @@
-import factory
 from io import BytesIO
-from PIL import Image
+
+import factory
 from django.core.files.uploadedfile import SimpleUploadedFile
-from icecreamtruck.icecreamapi.models import FoodItem, FoodFlavor, Customer
+from PIL import Image
+
+from icecreamtruck.icecreamapi.models import Customer, FoodFlavor, FoodItem
+
 
 class FoodItemFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -12,7 +15,6 @@ class FoodItemFactory(factory.django.DjangoModelFactory):
 
     name = "test_fooditem"
     price = 5.00
-
 
     # Create a SimpleUploadedFile to test images
     @factory.post_generation
@@ -31,6 +33,7 @@ class FoodFlavorFactory(factory.django.DjangoModelFactory):
 
     name = "test_foodflavor"
     food_item = factory.SubFactory(FoodItemFactory)
+
 
 class CustomerFactory(factory.django.DjangoModelFactory):
     class Meta:
