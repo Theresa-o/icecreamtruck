@@ -2,46 +2,43 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from icecreamtruck.icecreamapi.models import FoodFlavor, FoodItem, Sale, Truck
 
-# class TruckModelTest(TestCase):
-#     def setUp(self):
-#         self.truck = Truck.objects.create(name='Test Truck')
+class TruckModelTest(TestCase):
+    def setUp(self):
+        self.truck = Truck.objects.create(name='Test Truck')
 
-#     def test_truck_creation(self):
-#         self.assertEqual(self.truck.name, 'Test Truck')
+    def test_truck_creation(self):
+        self.assertEqual(self.truck.name, 'Test Truck')
 
-#     def test_total_sales_method(self):
-#         # Create a test user
-#         user = User.objects.create_user(username='testuser', password='testpassword')  
+    def test_total_sales_method(self):
+        # Create a test user
+        user = User.objects.create_user(username='testuser', password='testpassword')  
 
-#         food_item = FoodItem.objects.create(
-#             name='Ice Cream',
-#             price=5.00,
-#             quantity=10,
-#             item_type='ice_cream',
-#             truck=self.truck,
-#         )
-#         Sale.objects.create(food_item=food_item, truck=self.truck, user=user, quantity=2)
+        food_item = FoodItem.objects.create(
+            name='Ice Cream',
+            price=5.00,
+            quantity=10,
+            item_type='ice_cream',
+            truck=self.truck,
+        )
+        Sale.objects.create(food_item=food_item, truck=self.truck, user=user, quantity=2)
 
-#         # Ensure the truck instance has the updated sales
-#         self.truck = Truck.objects.get(name='Test Truck')
+        print(f"Debug: truck.sales.all() returns {self.truck.sales.all()}")
+        print(f"Debug: total_sales() returned {self.truck.total_sales()}")
+        print(f"Debug: Current truck name: {self.truck.name}")
 
-#         print(f"Debug: truck.sales.all() returns {self.truck.sales.all()}")
-#         print(f"Debug: total_sales() returned {self.truck.total_sales()}")
-#         print(f"Debug: Current truck name: {self.truck.name}")
+        self.assertEqual(self.truck.total_sales(), 10.00)
 
-#         self.assertEqual(self.truck.total_sales(), 10.00)
+        food_item_1 = FoodItem.objects.create(
+            name='Shaved Ice',
+            price=10.00,
+            quantity=5,
+            item_type='shaved_ice',
+            truck=self.truck,
+        )
 
-#         food_item_1 = FoodItem.objects.create(
-#             name='Shaved Ice',
-#             price=10.00,
-#             quantity=5,
-#             item_type='shaved_ice',
-#             truck=self.truck,
-#         )
+        Sale.objects.create(food_item=food_item_1, truck=self.truck, user=user, quantity=1)
 
-#         Sale.objects.create(food_item=food_item_1, truck=self.truck, user=user, quantity=1)
-
-#         self.assertEqual(self.truck.total_sales(), 20.00)
+        self.assertEqual(self.truck.total_sales(), 20.00)
 
 
 class FoodItemModelTest(TestCase):

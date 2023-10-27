@@ -19,7 +19,7 @@ class FoodItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = FoodItem
-        fields = ["name", "price", "quantity", "item_type", "image"]
+        fields = ["name", "price", "quantity", "item_type", "image", "truck"]
 
 class UserSerializer(serializers.ModelSerializer):
     """
@@ -61,7 +61,6 @@ class CreateTruckSerializer(serializers.Serializer):
 
 class CreateFoodItemSerializer(serializers.ModelSerializer):
     # add a field for flavour
-    # flavor = serializers.CharField(max_length=2, required=True)
     food_flavor = serializers.CharField(max_length=20)
 
     class Meta:
@@ -92,46 +91,3 @@ class SaleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sale
         fields = ["truck", "food_item", "user", "quantity", "purchase_time"]
-
-
-# class InventorySerializer(serializers.ModelSerializer):
-#     """
-#     Serializer for the Inventory model.
-
-#     This serializer is used for serializing inventory data.
-
-#     Fields:
-#         All fields from the Inventory model.
-#     """
-
-#     class Meta:
-#         model = Inventory
-#         fields = "__all__"
-
-# class TransactionSerializer(serializers.ModelSerializer):
-#     """
-#     Serializer for the Transaction model.
-
-#     This serializer is used for serializing purchase transactions made by customers.
-
-#     Fields:
-#         All fields from the Transaction model.
-#     """
-
-#     class Meta:
-#         model = Transaction
-#         fields = "__all__"
-
-# class EarningsSerializer(serializers.ModelSerializer):
-#     """
-#     Serializer for the Earnings model.
-
-#     This serializer is used for serializing earnings data.
-
-#     Fields:
-#         All fields from the Earnings model.
-#     """
-
-#     class Meta:
-#         model = Earnings
-#         fields = "__all__"

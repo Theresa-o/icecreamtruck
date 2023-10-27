@@ -3,7 +3,7 @@ from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from .models import FoodFlavor, FoodItem, Sale, Truck
-from .serializers import (CreateFoodItemSerializer, CreateTruckSerializer, PurchaseSerializer, TruckSerializer, SaleSerializer)
+from .serializers import (CreateFoodItemSerializer, CreateTruckSerializer, PurchaseSerializer, TruckSerializer, FoodItemSerializer, SaleSerializer)
 
 class PurchaseViewSet(viewsets.ViewSet):
     """
@@ -21,19 +21,6 @@ class PurchaseViewSet(viewsets.ViewSet):
     response is returned. If the quantity is not available, a 400 Bad Request response is
     returned with the message 'SORRY!'.
     """
-
-    # def list(self, request):
-    #     # Retrieve the purchase history
-    #     purchase_history = Sale.objects.filter(user=request.user).order_by('-purchase_time')
-    #     purchase_history_serializer = SaleSerializer(purchase_history, many=True)
-
-    #     # Retrieve the current purchase (if any) in the session
-    #     current_purchase = request.session.get('current_purchase', {})
-
-    #     return Response({
-    #         'purchase_history': purchase_history_serializer.data,
-    #         'current_purchase': current_purchase,
-    #     }, status=status.HTTP_200_OK)
 
     def create(self, request):
         serializer = PurchaseSerializer(data=request.data)
@@ -76,6 +63,20 @@ class InventoryViewSet(viewsets.ViewSet):
     def list(self, request):
         trucks = TruckSerializer(Truck.objects.all(), many=True)
         return Response({'Inventory': trucks.data}, status=status.HTTP_200_OK)
+
+class FoodItemViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint for managing food items.
+
+    This viewset allows you to retrieve food items.
+
+    - To retrieve a list of food items or a specific food item, use a GET request.
+
+    Returns:
+        Response: A Response object with food item details or an error message.
+    """
+    queryset = FoodItem.objects.all()
+    serializer_class = FoodItemSerializer
 
 class TruckViewSet(viewsets.ModelViewSet):
     """

@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from .models import FoodItem, Sale, FoodFlavor, Truck
 
 admin.site.register(FoodItem)

@@ -6,28 +6,6 @@ import os
 from icecreamtruck.icecreamapi.models import FoodFlavor, FoodItem, Sale, Truck
 from icecreamtruck.icecreamapi.serializers import (FoodItemSerializer, UserSerializer, CreateFoodItemSerializer, CreateTruckSerializer, PurchaseSerializer, TruckSerializer, SaleSerializer)
 
-# class FoodItemSerializer(TestCase):
-#     def test_valid_serializer(self):
-#         data = {
-#             'name': 'Ice Cream',
-#             'price': '5.00',
-#             'quantity': 10,
-#             'item_type': 'ice_cream',
-#         }
-#         serializer = FoodItemSerializer(data=data)
-#         self.assertTrue(serializer.is_valid())
-
-#     def test_invalid_serializer(self):
-#         data = {
-#             'name': 'Invalid Food Item',
-#             'price': '-2.50',
-#             'quantity': -10,
-#             'food_type': 'InvalidType',
-#         }
-#         serializer = FoodItemSerializer(data=data)
-#         self.assertFalse(serializer.is_valid())
-# 
-
 class FoodItemSerializerTest(TestCase):
     
     def test_valid_serializer(self):

@@ -14,18 +14,13 @@ class Truck(models.Model):
     name = models.CharField(max_length=100)
 
     def total_sales(self):
-
-        total = self.sales.annotate(total_sale=F('food_item__price') * F('quantity')).aggregate(total_sales=Sum('total_sale'))['total_sales']
-        return total if total is not None else 0
-
-        # second attempt
-        # total = self.sales.aggregate(total_sales=Sum(F('food_item__price') * F('quantity')))['total_sales']
-        # return total if total is not None else 0
     
         # first attempt
-        # sales = self.sales.annotate(total=F('food_item__price') * F('quantity'))
-        # total = sales.aggregate(total_sales=Sum('total'))['total_sales']
-        # return total if total else 0
+        sales = self.sales.annotate(total=F('food_item__price') * F('quantity'))
+        total = sales.aggregate(total_sales=Sum('total'))['total_sales']
+        return total if total else 0
+    
+
 
     def __str__(self):
         return self.name
@@ -73,20 +68,6 @@ class FoodFlavor(models.Model):
 
     def __str__(self):
         return self.name
-    
-    
-# class Inventory(models.Model):
-#     """
-#     This model is used to track the quantity of food items available in the truck's inventory.
-#     """
-#     food_item = models.ForeignKey(FoodItem, on_delete=models.CASCADE)
-#     food_quantity = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
-
-# class Earnings(models.Model):
-#     """
-#     This model tracks the earnings of the ice cream truck.
-#     """
-#     total_earnings = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
 class Sale(models.Model):
     """
@@ -99,7 +80,6 @@ class Sale(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     quantity = models.PositiveIntegerField()
     purchase_time = models.DateTimeField(auto_now_add=True)
-    # earnings = models.ForeignKey(Earnings, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Sale of {self.quantity} x {self.food_item}"
