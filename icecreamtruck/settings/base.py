@@ -38,11 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # External packages
-    'rest_framework'
+    'corsheaders',
+    'rest_framework',
+    'drf_spectacular',
     # External apps
+    'icecreamtruck.icecreamapi',
 ]
 
 MIDDLEWARE = [
+    # cors
+    'corsheaders.middleware.CorsMiddleware',
+    # cors
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'icecreamtruck.urls'
@@ -109,7 +116,25 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Media settings
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"}
+
+SPECTACULAR_SETTINGS = {"TITLE": "Django DRF Ecommerce"}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+# Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+CORS_ALLOW_METHODS = 'GET, POST, PUT, DELETE, OPTIONS'
+
+# Allow credentials (cookies, HTTP authentication) to be sent with the request
+CORS_ALLOW_CREDENTIALS = True
