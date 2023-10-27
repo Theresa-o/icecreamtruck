@@ -126,4 +126,4 @@ python manage.py test
 
 Please ensure you have set up your development environment and configured your database before running the tests.
 
-Please visit https://github.com/Theresa-o/icecreamtruckreact/blob/main/README.md to see the frontend
+Please visit https://github.com/Theresa-o/icecreamtruckreact/ to see the frontend
