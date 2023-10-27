@@ -90,6 +90,14 @@ The system uses serializers to convert model data into JSON format for API endpo
 - CreateFoodItemSerializer: Serializes data for creating a new food item.
 - SaleSerializer: Serializes sales data.
 
+## API Schema
+This project includes an API schema that defines the structure of your API endpoints. The API schema can be accessed as follows:
+
+- API Schema: /api/schema/
+-  API Documentation: /api/schema/docs
+  
+These endpoints can be used to understand the structure and functionality of the API.
+
 ## API Endpoints
 The system provides the following API endpoints:
 -
