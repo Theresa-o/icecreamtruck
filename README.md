@@ -20,7 +20,7 @@ git clone https://github.com/Theresa-o/icecreamtruck.git
 python -m venv ice-cream-venv
 ```
 
--Activate the virtual environment:
+- Activate the virtual environment:
 
 - Windows:
 
@@ -28,13 +28,13 @@ python -m venv ice-cream-venv
 ice-cream-venv\Scripts\activate
 ```
 
--Linux/macOS:
+- Linux/macOS:
 
 ```bash
 source ice-cream-venv/bin/activate
 ```
     
--Install Dependencies: While in your virtual environment, navigate to the project's root directory (where requirements.txt is located) and install the required packages using pip:
+- Install Dependencies: While in your virtual environment, navigate to the project's root directory (where requirements.txt is located) and install the required packages using pip:
 
 ```bash
 cd icecreamcommerce
@@ -42,7 +42,7 @@ pip install -r requirements.txt
 ```
 - Database Setup: Configure your database settings in the project's settings.py file. By default, the project is configured to use the SQLite database. You can change this to another database system (e.g., PostgreSQL or MySQL) if needed.
 
--Migrate Database: Apply the database migrations to create the necessary tables in the database:
+- Migrate Database: Apply the database migrations to create the necessary tables in the database:
 
 ```bash
 python manage.py migrate
@@ -53,7 +53,6 @@ python manage.py migrate
 ```bash
 python manage.py createsuperuser
 ```
-
 Follow the prompts to create an admin user.
 
 - Run the Development Server: Start the Django development server:
@@ -91,11 +90,6 @@ The system uses serializers to convert model data into JSON format for API endpo
 - CreateFoodItemSerializer: Serializes data for creating a new food item.
 - SaleSerializer: Serializes sales data.
 
-
-## Demo
-
-Insert gif or link to demo
-
 ## API Endpoints
 The system provides the following API endpoints:
 -
@@ -123,16 +117,8 @@ The system provides the following API endpoints:
 - Description: Allows users to add new food items to a specific ice cream truck. The endpoint expects a JSON body containing the data for the new food items.
 ## Running Tests
 
-To run tests, run the following command
-
-```bash
-  npm run test
-```
-
 ### Testing
 The system includes unit tests for models, serializers, and API views. These tests ensure that the system's components are functioning correctly. To run the tests, you can use the Django test framework.
-
-For example, to run the tests for the Truck model, use the following command:
 
 ``` bash
 python manage.py test 
@@ -140,4 +126,3 @@ python manage.py test
 
 Please ensure you have set up your development environment and configured your database before running the tests.
 
-Your Ice Cream Truck Management System is now set up and ready for use. You can customize the system, add data, and interact with the API endpoints as needed.
